@@ -28,7 +28,7 @@ Utiliza a avançada <strong>API Gemini da Google</strong> para oferecer resposta
 - [`google-generativeai`](https://pypi.org/project/google-generativeai/) — API Gemini da Google  
 - [`pyttsx3`](https://pypi.org/project/pyttsx3/) — Síntese de voz offline  
 - [`colorama`](https://pypi.org/project/colorama/) — Colorização de texto no terminal  
-- Bibliotecas padrão Python: `datetime`, `sys`, `time`
+- Bibliotecas padrão Python: `datetime` - `sys` - `time`
 
 ---
 
