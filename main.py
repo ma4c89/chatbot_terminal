@@ -7,7 +7,7 @@ from datetime import datetime
 
 init(autoreset=True)
 
-API_KEY = "AIzaSyDyg5Dol0EyPntXjoTNfFVxp34ocMsWepk"
+API_KEY = "SUA_API"
 genai.configure(api_key=API_KEY)
 
 modelo = genai.GenerativeModel("gemini-2.5-flash")
