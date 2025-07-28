@@ -7,12 +7,12 @@ from datetime import datetime
 
 init(autoreset=True)
 
-API_KEY = "SUA_API"
+API_KEY = "sua_api"
 genai.configure(api_key=API_KEY)
 
 modelo = genai.GenerativeModel("gemini-2.5-flash")
 chat = modelo.start_chat()
-chat.send_message("Responda sempre em português com frases curtas, diretas e resumidas.")
+chat.send_message("Responda sempre em português.")
 
 voz = pyttsx3.init()
 voices = voz.getProperty('voices')
@@ -24,10 +24,13 @@ for v in voices:
 voz.setProperty('rate', 180)
 voz.setProperty('volume', 1)
 
+usar_audio = input(Fore.CYAN + "\n🔈 Deseja ouvir as respostas com voz? (s/n): " + Style.RESET_ALL).strip().lower() == "s"
+
 mensagem_inicio = Style.BRIGHT + "\n\t\t🤖 Olá! Sou o Gemini. Estou pronto para te ajudar.\n\t\tDigite 'sair' a qualquer momento para encerrar.\n"
 print(Fore.MAGENTA + mensagem_inicio + Style.RESET_ALL)
-voz.say("Olá! Eu sou o Gemini. Estou pronto para te ajudar. Você pode digitar sair a qualquer momento para encerrar.")
-voz.runAndWait()
+if usar_audio:
+    voz.say("Olá! Eu sou o Gemini. Estou pronto para te ajudar. Você pode digitar sair a qualquer momento para encerrar.")
+    voz.runAndWait()
 
 data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 historico = []
@@ -42,12 +45,12 @@ while True:
         minutos = duracao // 60
         segundos = duracao % 60
         print(Fore.YELLOW + f"\n🕒 Sessão encerrada. Duração: {minutos} min {segundos} seg." + Style.RESET_ALL)
-        voz.say(f"A sessão durou {minutos} minutos e {segundos} segundos.")
-        voz.runAndWait()
+        if usar_audio:
+            voz.say(f"A sessão durou {minutos} minutos e {segundos} segundos.")
+            voz.runAndWait()
         break
 
     resposta = chat.send_message(mensagem)
-
     print("🤖 Gemini está digitando...", end="\r")
     for _ in range(3):
         time.sleep(0.5)
@@ -57,6 +60,10 @@ while True:
     print(" " * 50, end="\r")
 
     print(Fore.MAGENTA + "[  🤖 Gemini ] ➤  " + resposta.text + Style.RESET_ALL)
+
+    if usar_audio:
+        voz.say(resposta.text)
+        voz.runAndWait()
 
     historico.append(f"[ 👨🏻‍💻 Você ] ➤  {mensagem}")
     historico.append(f"[  🤖 Gemini ] ➤  {resposta.text}")
